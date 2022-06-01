@@ -181,12 +181,8 @@ namespace Seq.Forwarder.Cli.Commands
             try
             {
                 Console.TreatControlCAsInput = true;
-                var k = Console.ReadKey(true);
-                while (k.Key != ConsoleKey.C || !k.Modifiers.HasFlag(ConsoleModifiers.Control))
-                    k = Console.ReadKey(true);
 
-                cout.WriteLine("Ctrl+C pressed; stopping...");
-                Console.TreatControlCAsInput = false;
+                while (true);
             }
             catch (Exception ex)
             {
@@ -198,6 +194,8 @@ namespace Seq.Forwarder.Cli.Commands
 
             return 0;
         }
+
+
 
         static void WriteBanner()
         {
