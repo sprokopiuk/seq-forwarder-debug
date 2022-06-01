@@ -69,7 +69,7 @@ namespace Seq.Forwarder.Cli.Commands
             catch (Exception ex)
             {
                 using var logger = CreateLogger(
-                    LogEventLevel.Information,
+                    LogEventLevel.Debug,
                     SeqForwarderDiagnosticConfig.GetDefaultInternalLogPath());
 
                 logger.Fatal(ex, "Failed to load configuration from {ConfigFilePath}", _storagePath.ConfigFilePath);
@@ -136,7 +136,7 @@ namespace Seq.Forwarder.Cli.Commands
                 .Enrich.WithProperty("MachineName", Environment.MachineName)
                 .Enrich.WithProperty("Application", "Seq Forwarder")
                 .MinimumLevel.Is(internalLoggingLevel)
-                .MinimumLevel.Override("Microsoft", LogEventLevel.Warning)
+                .MinimumLevel.Override("Microsoft", internalLoggingLevel)
                 .WriteTo.File(
                     new RenderedCompactJsonFormatter(),
                     GetRollingLogFilePathFormat(internalLogPath),
@@ -144,7 +144,7 @@ namespace Seq.Forwarder.Cli.Commands
                     fileSizeLimitBytes: 1024 * 1024);
 
             if (Environment.UserInteractive)
-                loggerConfiguration.WriteTo.Console(restrictedToMinimumLevel: LogEventLevel.Information);
+                loggerConfiguration.WriteTo.Console(restrictedToMinimumLevel: internalLoggingLevel);
 
             if (!string.IsNullOrWhiteSpace(internalLogServerUri))
                 loggerConfiguration.WriteTo.Seq(

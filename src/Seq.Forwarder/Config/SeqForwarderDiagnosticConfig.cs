@@ -21,7 +21,7 @@ namespace Seq.Forwarder.Config
     public class SeqForwarderDiagnosticConfig
     {
         public string InternalLogPath { get; set; } = GetDefaultInternalLogPath();
-        public LogEventLevel InternalLoggingLevel { get; set; } = LogEventLevel.Information;
+        public LogEventLevel InternalLoggingLevel { get; set; } = LogEventLevel.Debug;
         public string? InternalLogServerUri { get; set; }
         public string? InternalLogServerApiKey { get; set; }
         public bool IngestionLogShowDetail { get; set; }
